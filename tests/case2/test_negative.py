@@ -7,7 +7,7 @@ from src.case2.collatz_sequence import CollatzSequence
 class TestHandledInvalidInput:
     @pytest.mark.parametrize("start", [0, -1, -100])
     def test_non_positive_start_rejected(self, start: int):
-        with pytest.raises(ValueError, match="Pozitive int"):
+        with pytest.raises(ValueError, match="Input should be greater than 0"):
             CollatzSequence(start)
 
     def test_analyzer_range_including_zero_rejected(self):
@@ -18,7 +18,7 @@ class TestHandledInvalidInput:
 class TestUnvalidatedInput:
     def test_string_start_rejected_with_clear_message(self):
         # TypeError by`"27" < 1`
-        with pytest.raises(ValueError, match="Pozitive int"):
+        with pytest.raises(ValueError, match="Input should be a valid integer"):
             CollatzSequence("27")  # pyright: ignore[reportArgumentType]
 
     def test_float_start_rejected(self):
