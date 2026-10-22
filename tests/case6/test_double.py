@@ -149,18 +149,18 @@ def test_autospec_catches_typos():
     n: Any = create_autospec(Notifier, instance=True)
     with pytest.raises(AttributeError):
         n.alrt(27, 111)
-    with pytest.raises(TypeError):
+    with pytest.raises(AttributeError):
         n.alrt(27)  # bad args
 
 
 def test_unconfigured_mock():
     system = CollatzAnalyzer(Mock(), Mock())
     result: int = system.steps(27)  # get()->Mock
-    assert result              # passes!
+    assert result                   # passes!
     assert isinstance(result, Mock)
 
 
 @pytest.mark.skip(reason="anti-pattern demo: would leak into other tests")
 def test_leaky():  # BAD
     collatz.next_value = lambda x: 1
-    ...               # never restored
+    ...                    # never restored
