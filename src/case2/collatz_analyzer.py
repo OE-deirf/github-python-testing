@@ -1,7 +1,7 @@
 from typing import Annotated
 from pydantic import ConfigDict, Field, validate_call
 
-from collatz_sequence import CollatzSequence
+from src.case2.collatz_sequence import CollatzSequence
 
 PositiveInt = Annotated[int, Field(gt=0)]
 STRICT = ConfigDict(strict=True)

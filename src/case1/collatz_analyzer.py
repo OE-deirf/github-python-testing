@@ -1,4 +1,4 @@
-from collatz_sequence import CollatzSequence
+from src.case1.collatz_sequence import CollatzSequence
 
 
 class CollatzAnalyzer:
