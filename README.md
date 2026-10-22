@@ -4,17 +4,17 @@
 ## with pip
 - python3.10 -m venv .venv
 - source .venv/bin/activate
-- pip install -v -r requirements.txt/requirements_dev.txt
+- pip install -v -r requirements.txt
 
 ## with uv
 - uv venv --python 3.10
 - source .venv/bin/activate
-- uv pip install -r requirements.txt/requirements_dev.txt
+- uv pip install -r requirements.txt
 
 # GIT  init
 - git init
-- dvc init            # create .dvc/ dir
-- git commit -m "DVC init"
+- git add .
+- git commit -m "init"
 
 # GIT commit
 - git add <file>
