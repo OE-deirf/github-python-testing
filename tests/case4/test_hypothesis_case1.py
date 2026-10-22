@@ -1,7 +1,7 @@
 import pytest
 from hypothesis import given, strategies as st
 
-from src.case4.collatz_sequence import CollatzSequence
+from src.case1.collatz_sequence import CollatzSequence
 
 
 @given(st.integers(min_value=1, max_value=100_000))
