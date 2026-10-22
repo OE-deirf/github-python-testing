@@ -8,7 +8,7 @@
 
 ## with uv
 - uv venv --python 3.10
-- source .venv/bin/activate
+- source .venv/bin/activate (on Windows: source .venv/Scripts/activate)
 - uv pip install -r requirements.txt
 
 # GIT  init
