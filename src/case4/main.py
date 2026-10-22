@@ -1,5 +1,5 @@
-from collatz_sequence import CollatzSequence
-from collatz_analyzer import CollatzAnalyzer
+from src.case4.collatz_sequence import CollatzSequence
+from src.case4.collatz_analyzer import CollatzAnalyzer
 
 
 analyzer = CollatzAnalyzer(1, 100)

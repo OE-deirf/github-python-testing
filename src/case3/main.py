@@ -2,8 +2,8 @@ import logging
 import sys
 from typing import Callable, ParamSpec, Any
 
-from collatz_sequence import CollatzSequence
-from collatz_analyzer import CollatzAnalyzer
+from src.case3.collatz_sequence import CollatzSequence
+from src.case3.collatz_analyzer import CollatzAnalyzer
 
 logging.basicConfig(
     level=logging.INFO,
