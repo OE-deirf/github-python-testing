@@ -102,17 +102,23 @@ class InMemoryRepo:  # no DB
         self.data: dict[int, Any] = {}
 
     def get(self, n: int) -> int | None:
+        print(f"get fake db: {n}, {self.data.get(n)}")
         return self.data.get(n)
 
     def save(self, n: int, steps: int):
+        print(f"saving steps: {n},{steps}")
         self.data[n] = steps
 
 
 def test_results_are_cached():
     repo = InMemoryRepo()
     system = CollatzAnalyzer(repo, Mock())
+    print("call first begining")
     first: int = system.steps(27)
+    print("call first ending")
+    print("call second begining")
     second: int = system.steps(27)  # hit
+    print("call second ending")
     assert first == second == 111
     assert repo.data == {27: 111}
 
@@ -120,11 +126,19 @@ def test_results_are_cached():
 # --------------------------------------------------------------------
 # Slide 8: Patching: monkeypatch and pytest-mock
 # --------------------------------------------------------------------
+def next_value2(n: int = 0):
+    print("next_value2")
+    return 1
+
+
 def test_step_function_stubbed(monkeypatch: pytest.MonkeyPatch):           # built-in fixture
     r: Callable[..., int] = lambda x: 1  # pyright: ignore[reportUnknownLambdaType, reportAssignmentType]
     monkeypatch.setattr(collatz, "next_value", r)
     analyzer = CollatzAnalyzer(InMemoryRepo(), Mock())
     assert analyzer.steps(10**9) == 1                               # one step, instantly
+    monkeypatch.setattr(collatz, "next_value", next_value2)
+    analyzer = CollatzAnalyzer(InMemoryRepo(), Mock())
+    assert analyzer.steps(10**9) == 1
 
 
 def test_second_call_does_not_recompute(mocker: Any):          # pip install pytest-mock

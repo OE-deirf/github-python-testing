@@ -25,6 +25,7 @@ class CollatzAnalyzer:
             raise ValueError("n < 1")
         cached: int | None = self.repo.get(n)
         if cached is not None:
+            print(f"return from cache {cached}")
             return cached
         count: int = 0
         x: int = n
