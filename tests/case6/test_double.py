@@ -1,7 +1,7 @@
+import pytest
+
 from typing import NoReturn, Any, Callable
 from unittest.mock import Mock, create_autospec
-
-import pytest
 
 import src.case6.collatz_analyzer as collatz
 from src.case6.collatz_analyzer import CollatzAnalyzer, Notifier, Repository
@@ -16,9 +16,14 @@ class DummyNotifier:                      # fails loudly if ever touched
 
 
 class StubRepo:                           # returns a canned answer
-    def __init__(self, canned: int | None = None) -> None: self.canned: int | None = canned
-    def get(self, n: int) -> int | None: return self.canned
-    def save(self, n: int, steps: int) -> None: pass
+    def __init__(self, canned: int | None = None) -> None:
+        self.canned: int | None = canned
+
+    def get(self, n: int) -> int | None:
+        return self.canned
+
+    def save(self, n: int, steps: int) -> None:
+        pass
 
 
 def test_invalid_input_needs_no_collaborators():
@@ -66,21 +71,21 @@ def test_short_run_silent():
 # Slide 6: Mock objects with unittest.mock
 # --------------------------------------------------------------------
 @pytest.fixture
-def repo():
+def repo() -> Mock:
     r = Mock(spec=Repository)          # only Repository's attributes allowed
     r.get.return_value = None          # stub behaviour: cache miss
     return r
 
 
 @pytest.fixture
-def notifier():
+def notifier() -> Mock:
     return Mock(spec=Notifier)
 
 
 def test_result_is_saved_and_alerted(repo: Repository, notifier: Notifier):
     CollatzAnalyzer(repo, notifier).steps(27)
-    repo.get.assert_called_once_with(27)  # pyright: ignore[reportAttributeAccessIssue]
-    repo.save.assert_called_once_with(27, 111)  # pyright: ignore[reportAttributeAccessIssue]
+    repo.get.assert_called_once_with(27)             # pyright: ignore[reportAttributeAccessIssue]
+    repo.save.assert_called_once_with(27, 111)       # pyright: ignore[reportAttributeAccessIssue]
     notifier.alert.assert_called_once_with(27, 111)  # pyright: ignore[reportAttributeAccessIssue]
 
 
@@ -122,7 +127,7 @@ def test_step_function_stubbed(monkeypatch: pytest.MonkeyPatch):           # bui
     assert analyzer.steps(10**9) == 1                               # one step, instantly
 
 
-def test_second_call_does_not_recompute(mocker: Any):       # pip install pytest-mock
+def test_second_call_does_not_recompute(mocker: Any):          # pip install pytest-mock
     spy = mocker.spy(collatz, "next_value")                    # real function still runs
     analyzer = CollatzAnalyzer(InMemoryRepo(), Mock())
     analyzer.steps(27)
